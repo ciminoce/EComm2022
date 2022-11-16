@@ -1,0 +1,72 @@
+﻿@model List<EComm2022.Web.Models.Usuario.UsuarioListVm>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ol class="breadcrumb mt-4 mb-4 ">
+    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+    <li class="breadcrumb-item active">Usuarios</li>
+</ol>
+<div class="card">
+    <h5 class="card-header bg-primary text-white">
+        <i class="fas fa-users"></i>
+        Listado de Usuarios
+
+    </h5>
+    <div class="card-body">
+        <a href="@Url.Action("Create","Usuario")" class="btn btn-primary">Crear Nueva</a>
+        <hr/>
+        <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Correo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Rol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Activo)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Correo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rol)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Activo)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UsuarioId }, new { @class = "btn btn-warning" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.UsuarioId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+        </table>
+
+    </div>
+    <div class="card-footer text-muted">
+        Cantidad de registros: <strong>@Model.Count</strong> 
+    </div>
+</div>
+

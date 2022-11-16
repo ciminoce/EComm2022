@@ -1,0 +1,87 @@
+﻿@using System.Linq
+@model List<EComm2022.Web.Models.Producto.ProductoListVm>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<ol class="breadcrumb mt-4 mb-4 ">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Dashboard</a></li>
+    <li class="breadcrumb-item active">Productos</li>
+</ol>
+
+<h4>Listado de Productos</h4>
+
+<p>
+    <a href="@Url.Action("Create","Producto")" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+</p>
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Imagen)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreProducto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Marca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Categoria)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Precio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Stock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Activo)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (!string.IsNullOrEmpty(item.Imagen))
+                {
+                    <img src="@Url.Content(item.Imagen)" alt="Image" style="width: 100px; height: 150px; max-width: 100%; height: auto;" />
+                }
+                else
+                {
+                    <img src="@Url.Content($"~/Content/Imagenes/Productos/SinImagenDisponible.jpg")" alt="Imagen" style="width: 100px; height: 150px; max-width: 100%; height: auto;" />
+
+                }
+
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreProducto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Marca)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activo)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "Producto", new { id = item.ProductoId })" class="btn btn-warning"><i class="fas fa-pen"></i></a>
+                <a href="@Url.Action("Delete", "Producto", new { id = item.ProductoId })" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+
+            </td>
+        </tr>
+    }
+
+</table>

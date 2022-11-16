@@ -1,0 +1,62 @@
+﻿@model PagedList.IPagedList<EComm2022.Entidades.Entidades.Marca>
+@using EComm2022.Web.Helpers
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    SelectList itemsPerPageList = DefaultValues.ItemsPerPageList;
+}
+<ol class="breadcrumb mt-4 mb-4 ">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Dashboard</a></li>
+    <li class="breadcrumb-item active">Marcas</li>
+</ol>
+<div class="card">
+    <h5 class="card-header text-white bg-success">
+        <i class="fas fa-book"></i>
+        Lista de Marcas
+    </h5>
+
+    <div class="card-body">
+        <a href="@Url.Action("Create","Marca")" class="btn btn-primary">Crear Nuevo</a>
+        <hr />
+        @using (Html.BeginForm("Index", "Marca", FormMethod.Post))
+        {
+            <label>Cant x Pág.:</label>
+            @Html.DropDownList("pageSize", DefaultValues.ItemsPerPageList, new { @id = "pageSize", onchange="this.form.submit();" })
+        } 
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().NombreMarca)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Activo)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var marca in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => marca.NombreMarca)</td>
+                        <td>@Html.DisplayFor(modelItem => marca.Activo)</td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = marca.MarcaId }, new { @class = "btn btn-warning" })
+                            @Html.ActionLink("Borrar", "Delete", new { id = marca.MarcaId }, new { @class = "btn btn-danger" })
+
+                        </td>
+                    </tr>
+
+
+                }
+
+            </tbody>
+        </table>
+    </div>
+    Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de: @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, itemsPerPage = ViewBag.CurrentItemsPerPage }));
+
+</div>
+
+
+

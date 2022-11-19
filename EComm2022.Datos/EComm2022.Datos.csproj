@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityTypeConfigurations\CarritoEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfigurations\CategoriaEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfigurations\CiudadesEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfigurations\ClienteEntityTypeConfiguration.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="EntityTypeConfigurations\ProveedorEntityTypeConfiguration.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\Facades\IRepositorioCarritos.cs" />
     <Compile Include="Repositorios\Facades\IRepositorioCategorias.cs" />
     <Compile Include="Repositorios\Facades\IRepositorioCiudades.cs" />
     <Compile Include="Repositorios\Facades\IRepositorioClientes.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="Repositorios\Facades\IRepositorioProveedores.cs" />
     <Compile Include="Repositorios\Facades\IRepositorioProvincias.cs" />
     <Compile Include="Repositorios\Facades\IRepositorioUsuarios.cs" />
+    <Compile Include="Repositorios\RepositorioCarritos.cs" />
     <Compile Include="Repositorios\RepositorioCategorias.cs" />
     <Compile Include="Repositorios\RepositorioCiudades.cs" />
     <Compile Include="Repositorios\RepositorioClientes.cs" />

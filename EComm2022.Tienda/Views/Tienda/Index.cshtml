@@ -232,7 +232,7 @@
                     $("#contenedor_productos").LoadingOverlay("hide");
                     console.log(response);
                     $.each(response.data, function (index, elemento) {
-                        //console.log(elemento);
+                        console.log(elemento);
                         //debugger;
                         $("<div>").addClass("col mb-5").append(
                             $("<div>").addClass("card h-100").append(
@@ -248,7 +248,8 @@
                                     $("<div>").addClass("d-grid gap-2").append(
                                         @if (Session["cliente"] != null)
                                         {
-                                            @:$("<button>").addClass("btn btn-success mt-auto agregarCarrito").data("productoId", elemento.ProductoId).text("Agregar a Carrito"),
+                                            //se cambió productoId x productoid en minúsculas
+                                            @:$("<button>").addClass("btn btn-success mt-auto agregarCarrito").data("productoid", elemento.ProductoId).text("Agregar a Carrito"),
 
                                         }
                                         $("<a>").addClass("btn btn-dark mt-auto").attr({ "href": "@Url.Action("DetalleProducto","Tienda")" + "?productoId=" + elemento.ProductoId }).text("Ver Detalle")
@@ -279,42 +280,14 @@
             mostrarProductos(categoriaSeleccionadaId, marcaSeleccionadaId);
         });
 
-        $(document).on("click", "button.agregarCarrito", function() {
 
-            console.log($(this).data("productoId"));
-            //Utilizo ajax para agregar el producto al carrito
-            jQuery.ajax({
-                url: "@Url.Action("AgregarAlCarrito","Tienda")",
-                type: "POST",
-                data: JSON.stringify({ productoId: $(this).data("productoId")}),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    //Si tuve éxito
-                    if (data.respuesta) {
-                        //Actualizo la cantidad del productos en el botón carrito del layout
-                        MostrarCantidadEnCarrito();
-                        //Con sweetAlert
-                        swal({
-                                title: "Agregado al carrito",
-                                text: "¿Desea ir al carrito?",
-                                type: "success",
-                                showCancelButton: true,
-                                confirmButtonClass: "btn-primary",
-                                confirmButtonText: "SI",
-                                cancelButtonText: "NO",
-                                closeOnConfirm: true
-                            },
-                            function() {
-                                window.location.href="@Url.Action("Carrito","Tienda")"
-                            });
-                    } else {
-                        swal("", data.mensaje, "warning");
-                    }
-                }
+        $(document).on("click",
+            "button.agregarCarrito",
+            function () {
+                //se puso productoid con minúsculas y entre comillas simples
+                console.log($(this).data('productoid'));
+                debugger;
+            });
 
-        });
-
-        });
     </script>
 }

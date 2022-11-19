@@ -65,6 +65,9 @@ namespace EComm2022.Tienda
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<IRepositorioCarritos>().To<RepositorioCarritos>().InRequestScope();
+            kernel.Bind<IServicioCarritos>().To<ServicioCarritos>().InRequestScope();
+
 
             kernel.Bind<IRepositorioCategorias>().To<RepositorioCategorias>().InRequestScope();
             kernel.Bind<IServicioCategorias>().To<ServicioCategorias>().InRequestScope();

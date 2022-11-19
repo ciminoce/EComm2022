@@ -11,5 +11,6 @@ namespace EComm2022.Datos.Repositorios.Facades
         void Guardar(Producto producto);
         Producto GetProductoPorId(int id);
         List<ProductoListDto> GetLista(int categoriaId, int marcaId);
+        void ActualizarStock(int productoId, int cantidad, bool suma);
     }
 }

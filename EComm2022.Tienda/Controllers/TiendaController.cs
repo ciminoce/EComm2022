@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using EComm2022.Entidades.Dtos;
+using EComm2022.Entidades.Dtos.Producto;
 using EComm2022.Entidades.Entidades;
 using EComm2022.Servicios.Servicios.Facades;
 using EComm2022.Tienda.Models.Producto;
@@ -13,14 +14,16 @@ namespace EComm2022.Tienda.Controllers
 {
     public class TiendaController : Controller
     {
+        private IServicioCarritos servicioCarritos;
         private IServicioCategorias servicioCategorias;
 
         private IServicioMarcas servicioMarcas;
         private IServicioProductos servicioProductos;
         private IMapper mapper;
 
-        public TiendaController(IServicioCategorias servicioCategorias, IServicioMarcas servicioMarcas, IServicioProductos servicioProductos)
+        public TiendaController(IServicioCategorias servicioCategorias, IServicioMarcas servicioMarcas, IServicioProductos servicioProductos,IServicioCarritos servicioCarritos)
         {
+            this.servicioCarritos = servicioCarritos;
             this.servicioCategorias = servicioCategorias;
             this.servicioMarcas = servicioMarcas;
             this.servicioProductos = servicioProductos;
@@ -58,5 +61,43 @@ namespace EComm2022.Tienda.Controllers
             return jsonResultado;
         }
 
+        public ActionResult DetalleProducto(int productoId)
+        {
+            ProductoDetalleDto producto =mapper
+                .Map<ProductoDetalleDto>(servicioProductos
+                    .GetProductoPorId(productoId));
+            ProductoDetalleVm productoVm = mapper.Map<ProductoDetalleVm>(producto);
+            return View(productoVm);
+        }
+
+        [HttpGet]
+        public JsonResult CantidadEnCarrito()
+        {
+            var clienteId =((Cliente) Session["cliente"]).ClienteId;
+            var cantidad = servicioCarritos.CantidadEnCarrito(clienteId);
+            return Json(new { cantidad = cantidad }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AgregarAlCarrito(int productoId)
+        {
+            var clienteId = ((Cliente)Session["cliente"]).ClienteId;
+            string mensaje = string.Empty;
+            bool resultado = false;
+            try
+            {
+                servicioCarritos.AgregarAlCarrito(clienteId,productoId);
+                mensaje = "Producto agregado al Carrito";
+                resultado = true;
+            }
+            catch (Exception e)
+            {
+                mensaje = e.Message;
+                resultado = false;
+
+            }
+
+            return Json(new { resultado = resultado, mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

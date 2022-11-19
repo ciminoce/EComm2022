@@ -148,5 +148,27 @@ namespace EComm2022.Datos.Repositorios
             }
         }
 
+        public void ActualizarStock(int productoId, int cantidad, bool suma)
+        {
+            try
+            {
+                var productoInDb = context.Productos
+                    .SingleOrDefault(p => p.ProductoId == productoId);
+                if (suma)
+                {
+                    productoInDb.Stock -= cantidad;
+                }
+                else
+                {
+                    productoInDb.Stock += cantidad;
+                }
+
+                context.Entry(productoInDb).State = EntityState.Modified;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }
